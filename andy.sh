@@ -36,10 +36,9 @@ for FILE in $(cat $QUARANTINE); do
         done
         echo "Found $count copies of $FPATH"
         if [[ $count -ge 2 ]]; then
-            echo "Removing quarantine file $FPATH"
             rm -v $FILE
-        elif [[ $count -lt 1 ]]; then
-            echo "No copies found for $FPATH, running jake.sh"
+        else
+            echo "Running jake.sh for $FILE"
             ./jake.sh $FILE
         fi
     done
