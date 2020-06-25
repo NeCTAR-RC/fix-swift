@@ -29,15 +29,16 @@ for FILE in $(cat $QUARANTINE); do
     for F in $(grep $FPATH $OBJECTS); do
         echo "Checking $FPATH"
         curls=$(swift-object-info $F | grep '^curl' | grep -v Handoff)
-        found="no"
+        count=0
         for curlcmd in $curls; do
             http_code=$(eval "$curlcmd --path-as-is -s -o /dev/null -w '%{http_code}'")
-            if [[ $http_code -eq 404 ]]; then
-                 found="yes"
-                 break
-            fi
+            [[ $http_code -eq 200 ]] && count=$((count+1))
         done
-        if [[ "$found" == "no" ]]; then
+        echo "Found $count copies of $FPATH"
+        if [[ $count -ge 2 ]]; then
+            echo "Removing quarantine file $FPATH"
+            rm -v $FILE
+        elif [[ $count -lt 1 ]]; then
             echo "No copies found for $FPATH, running jake.sh"
             ./jake.sh $FILE
         fi
