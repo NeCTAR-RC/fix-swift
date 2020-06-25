@@ -6,7 +6,7 @@ if [[ ! -f ${FILE} ]]; then
   exit 1
 fi
 if [[ -z ${IPADDRESS} ]]; then
-  IPADDRESS=`facter ipaddress`
+  IPADDRESS=`/opt/puppetlabs/bin/facter ipaddress`
   echo "Guessing ipaddress to be ${IPADDRESS}"
 fi
 # name of the file
