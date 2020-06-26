@@ -35,7 +35,9 @@ for FILE in $(cat $QUARANTINE); do
     done
     echo "Found $count copies of $FPATH"
     if [[ $count -ge 2 ]]; then
+        dir=`dirname $FILE`
         rm -v $FILE
+        rmdir -v $dir
     else
         echo "Running jake.sh for $FILE"
         ./jake.sh $FILE
