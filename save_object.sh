@@ -1,7 +1,7 @@
 #!/bin/bash
 # save_object.sh
 
-URL="https://swift.rc.nectar.org.au/v1/AUTH_f42f9588576c43969760d81384b83b1f/public/missing_object_hash"
+URL="https://swift.rc.nectar.org.au/v1/AUTH_1/swift-audit/audit.log"
 
 for hash in $(curl -s $URL); do
   echo "Looking for ${hash}"
