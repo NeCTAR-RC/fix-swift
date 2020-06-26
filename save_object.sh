@@ -9,6 +9,6 @@ for hash in $(curl -s $URL); do
     fi
     echo "Looking for ${hash}"
     echo "Found object ${hash} in ${qloc}. Attempting to save..."
-    echo ./jake.sh ${qloc}
+    ./jake.sh ${qloc}
   done
 done
