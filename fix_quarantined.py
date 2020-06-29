@@ -102,12 +102,13 @@ def main():
     actionfile = 'action_%s.sh' % time.strftime("%Y%m%d-%H%M%S")
     logger.info("action commands will be written into file %s" % actionfile)
 
+    ring = Ring('/etc/swift/', ring_name='object')
+
     for datafile in files:
         if limit < 1:
             break
 
         with open(datafile, 'rb') as fp:
-
             try:
                 metadata = read_metadata(fp)
             except EOFError:
@@ -115,10 +116,7 @@ def main():
                 continue
 
         name = metadata.get('name')
-
         account, container, obj = name.split('/', 3)[1:]
-        ring = Ring('/etc/swift/', ring_name='object')
-
         part, nodes = ring.get_nodes(account, container, obj)
 
         replica_count = 0
