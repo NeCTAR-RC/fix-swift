@@ -28,7 +28,10 @@ if [[ -f ${diskloc} ]]; then
   echo "md1 ${md1}"
   echo "md2 ${md2}"
   if [ "${md1}" == "${md2}" ]; then
-    echo "md5sum matches, do not need to do anything"
+      echo "md5sum matches, deleting $FILE"
+      dir=`dirname $FILE`
+      rm -v $FILE
+      rmdir -v $dir
     exit 5
   fi
 else
